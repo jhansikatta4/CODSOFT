@@ -1,0 +1,52 @@
+import java.util.Scanner;
+import java.util.Random;
+
+public class NumberGuessingGame {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+        int score = 0;
+        boolean playAgain = true;
+
+        System.out.println("🎮 Welcome to the Number Guessing Game!");
+
+        while (playAgain) {
+            int lowerBound = 1;
+            int upperBound = 100;
+            int numberToGuess = random.nextInt(upperBound - lowerBound + 1) + lowerBound;
+            int maxAttempts = 7;
+            boolean guessedCorrectly = false;
+
+            System.out.println("\nI'm thinking of a number between " + lowerBound + " and " + upperBound + ".");
+            System.out.println("You have " + maxAttempts + " attempts. Good luck!");
+
+            for (int attempt = 1; attempt <= maxAttempts; attempt++) {
+                System.out.print("Attempt " + attempt + ": Enter your guess: ");
+                int userGuess = scanner.nextInt();
+
+                if (userGuess == numberToGuess) {
+                    System.out.println("🎉 Correct! You've guessed the number.");
+                    guessedCorrectly = true;
+                    score++;
+                    break;
+                } else if (userGuess < numberToGuess) {
+                    System.out.println("🔼 Too low!");
+                } else {
+                    System.out.println("🔽 Too high!");
+                }
+            }
+
+            if (!guessedCorrectly) {
+                System.out.println("❌ Out of attempts! The number was: " + numberToGuess);
+            }
+
+            System.out.println("Current Score: " + score);
+            System.out.print("Would you like to play another round? (yes/no): ");
+            String response = scanner.next().toLowerCase();
+            playAgain = response.equals("yes") || response.equals("y");
+        }
+
+        System.out.println("🏁 Game over. Final Score: " + score);
+        scanner.close();
+    }
+}
